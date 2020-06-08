@@ -21,31 +21,6 @@
 
 
 
-## 开发日志
-
-* 3-9： 前端静态页面完成
-* 3-16：前端完善+登录注册功能完成
-* 4-16：数据源获取完成
-* 4-20：会议录入部分完成
-* 4-22：会议检索功能初步完成
-* 4-27：第一次迭代
-* 5-5：第二次迭代
-* 5-15：第三次迭代
-
-
-
-## 三次迭代日志
-
-1. 第一次迭代
-   * 完成系统雏形，包括基本的用户管理，会议管理，收藏会议，调用Google API四大功能
-2. 第二次迭代
-   * 完成进阶功能，包括消息通知，全文检索，网站审计和统计
-3. 第三次迭代
-   * 优化系统，包括增设缓存，静态页面优化，权限控制，错误处理，系统日志等
-   * 必要的系统测试
-
-
-
 ## 测试时运行说明
 - 运行说明
   - 先运行SQL文件，建立必备数据库，同时需要安装好Redis
@@ -67,7 +42,7 @@
 
 ## 项目成员
 
-* [jonnyS](https://github.com/JonnyS1226)
-* [Clairejfj](https://github.com/Clairejfj)
-* [dasklarleo](https://github.com/dasklarleo)
+* [jonnyS](https://github.com/JonnyS1226)（爬虫，前端，后端）
+* [Clairejfj](https://github.com/Clairejfj)（后端，测试）
+* [dasklarleo](https://github.com/dasklarleo)（爬虫，前端）
 
