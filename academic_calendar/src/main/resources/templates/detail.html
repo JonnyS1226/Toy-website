@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>会议</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/toastr.css">
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=BpS9lu3iyWYAFL8ems8VZZVYNayuA5Yf"></script>
+
+
+</head>
+<body class="about-page">
+    <div class="page-header">
+        <header class="site-header">
+            <div class="top-header-bar" th:replace="index::TopHeader">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                            <div class="header-bar-text lg-flex align-items-center">
+                                <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                    　　<i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-envelope-o"></i>
+                                </a>
+                            </div><!-- .header-bar-text -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                            <div class="header-bar-search" >
+                                <form class="flex align-items-stretch">
+                                    <input type="search" placeholder="搜索">
+                                    <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- .header-bar-search -->
+
+                            <div class="header-bar-menu">
+                                <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                    <li><a href="#">注册</a></li>
+                                    <li><a href="#">登录</a></li>
+                                </ul>
+                            </div><!-- .header-bar-menu -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container-fluid -->
+            </div><!-- .top-header-bar -->
+
+            <div class="nav-bar" id="floatbar" th:replace="index::NavBar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="index.html" rel="home">学术<span>日历与地图</span></a></h1>
+                            </div><!-- .site-branding -->
+                        </div><!-- .col -->
+
+                        <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                            <nav class="site-navigation flex justify-content-end align-items-center">
+                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="index.html">首页</a></li>
+                                    <li><a href="conference.html">查询会议</a></li>
+                                    <li><a href="add.html">添加会议</a></li>
+                                    <li><a href="/action">关于我们</a></li>
+                                    <li><a href="personal.html">个人中心</a></li>
+                                </ul>
+
+
+
+                            </nav><!-- .site-navigation -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-header">
+                            <h1>会议详情</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs">
+                    <ul class="flex flex-wrap align-items-center p-0 m-0">
+                        <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+                        <li><a href="#"><i class="fa fa-home"></i> 查询会议</a></li>
+                        <li>会议详情</li>
+                    </ul>
+                </div><!-- .breadcrumbs -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="about-heading">
+                    <h2 class="entry-title" th:text="${conferenceInfo.conference}">Welcome to Ezuca</h2>
+                    <p >
+                        <span class="fa fa-link">&nbspLink: &nbsp</span> <span> <a th:href="${conferenceInfo.link}" th:text="${' ' + conferenceInfo.link}"></a></span>
+                    </p>
+                    <p >
+                        <span class="fa fa-calendar">&nbspTime: &nbsp</span><span th:text="${' ' + conferenceInfo.startTime + ' - ' + conferenceInfo.endTime}"></span>
+                    </p>
+                    <p >
+                        <span class="fa fa-calendar">&nbspSubmission Deadline: &nbsp</span><span th:text="${' ' + conferenceInfo.submissionDeadline}"></span>
+                    </p>
+                    <p >
+                        <span class="fa fa-location-arrow">&nbspLocation: &nbsp</span><span th:text="${' ' + conferenceInfo.location}"></span>
+                    </p>
+                    <p >
+                        <span class="fa fa-ticket">&nbspCategory: &nbsp</span><span th:text="${' ' + conferenceInfo.categories}"></span>
+                    </p>
+                    <p>
+                        <span>
+                            <input type="hidden" th:value="${conferenceInfo.id}" id="conferenceId" name="conferenceId">
+                            <button type="button" th:class="|btn ${hasAdded? 'btn-secondary':'btn-info'} btn-sm mr-5 add-btn|"
+                            th:text="${hasAdded?'取消收藏':'添加到我的收藏'}">添加到我的收藏</button>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn-info btn-sm mr-5">
+                                <a href="Mailto:sjy1933794630@gmail.com?Subject=会议信息反馈&Body=会议信息反馈" style="text-decoration: none;color: white">提交会议异常信息</a>
+                            </button>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn-info btn-sm mr-5 edit-btn" data-toggle="modal" data-target="#editModal"
+                            th:if="${user!=null&&user.role==1}">
+                                更新会议信息
+                            </button>
+                        </span>
+                    </p>
+                </div><!-- .about-heading -->
+            </div><!-- .col -->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">更新会议信息</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/conference/edit" name="conferenceForm">
+                                <input type="hidden" th:value="${conferenceId}" name="id" id="id">
+                                <div class="form-group">
+                                    <label for="conference" class="col-form-label">会议名称</label>
+                                    <textarea type="text" class="form-control" name="conference" rows="2" id="conference" th:text="${conferenceInfo.conference}"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="link" class="col-form-label">会议链接</label>
+                                    <input type="text" class="form-control" name="link" id="link" th:value="${conferenceInfo.link}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="startTime" class="col-form-label">会议开始时间</label>
+                                    <input type="text" class="form-control" name="startTime" id="startTime" th:value="${conferenceInfo.startTime}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endTime" class="col-form-label">会议结束时间</label>
+                                    <input type="text" class="form-control" name="endTime" id="endTime" th:value="${conferenceInfo.endTime}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="submissionDeadline" class="col-form-label">投稿截止时间</label>
+                                    <input type="text" class="form-control" name="submissionDeadline" id="submissionDeadline" th:value="${conferenceInfo.submissionDeadline}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="col-form-label">会议召开地点</label>
+                                    <input type="text" class="form-control" name="location" id="location" th:value="${conferenceInfo.location}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="categories" class="col-form-label">主题</label>
+                                    <input type="text" class="form-control" name="categories" id="categories" th:value="${conferenceInfo.categories}">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="sendBtn" onclick="document.conferenceForm.submit()">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-12">
+                <div class="contact-gmap">
+                    <div id="baiduMap" style="width:1000px;height:500px;align-items: center"></div>
+                </div><!-- .contact-gmap -->
+            </div><!-- .col -->
+
+
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                            <h5>学术日历与地图 </h5>
+
+                            <p class="footer-copyright">
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+
+                        </div><!-- .foot-about -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>联系方式</h2>
+
+                            <ul>
+                                <li>Email: sjy1933794630@gmail.com</li>
+                                <li>Address: 哈尔滨工业大学(威海)</li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="quick-links flex flex-wrap">
+                            <h2 class="w-100">快速链接</h2>
+
+                            <ul class="w-50">
+                                <li><a href="#">回到顶部 </a></li>
+                                <li><a href="#aboutus">关于我们 </a></li>
+                                <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                                <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                            </ul>
+
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="follow-us">
+                            <h2>项目地址</h2>
+
+                            <ul class="follow-us flex flex-wrap align-items-center">
+                                <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                            </ul>
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+    </footer><!-- .site-footer -->
+    <script type="text/javascript" th:inline="javascript">
+        // 百度地图API功能
+        var lo = [[${conferenceInfo.location}]];
+        var map = new BMap.Map("baiduMap");  // 创建Map实例
+        map.centerAndZoom(lo, 8);      // 初始化地图,用城市名设置地图中心点
+        map.enableScrollWheelZoom();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src='/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/js/custom.js'></script>
+    <script src="/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            positionClass: "toast-center-center"
+        }
+    </script>
+    <!--    下拉菜单依赖的js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        $(function(){
+            $(".add-btn").click(store);
+        });
+
+        function store() {
+            var btn = this;
+            if($(btn).hasClass("btn-info")) {
+                // 添加收藏
+                $.post(
+                    "/store",
+                    {"conferenceId":$(btn).prev().val()},
+                    function(data) {
+                        data = $.parseJSON(data);
+                        if(data.code === 0) {
+                            toastr.success("添加收藏成功，可在个人中心查看");
+                            window.location.reload();
+                        } else {
+                            toastr.error("添加收藏失败，请登录后重试");
+                        }
+                    }
+                );
+            } else {
+                // 取消收藏
+                $.post(
+                    "/clear",
+                    {"conferenceId":$(btn).prev().val()},
+                    function(data) {
+                        data = $.parseJSON(data);
+                        if(data.code === 0) {
+                            toastr.success("取消收藏成功");
+                            window.location.reload();
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                );
+            }
+        }
+
+    </script>
+</body>
+</html>

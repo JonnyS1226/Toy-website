@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" th:href="@{css/font-awesome.min.css}">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" th:href="@{css/elegant-fonts.css}">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" th:href="@{css/themify-icons.css}">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" th:href="@{css/swiper.min.css}">
+
+    <!-- Styles -->
+    <link rel="stylesheet" th:href="@{css/style.css}">
+
+    <style type="text/css">
+        body {
+            background: #DADADA url("images/bg1.jpg") no-repeat;
+            background-size: 100%;
+        }
+        body > .grid {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <style type="text/css">
+              .divForm{
+                  position: absolute;/*绝对定位*/
+                  width: 400px;
+                  height: 400px;
+
+
+                  text-align: center;/*(让div中的内容居中)*/
+                  top: 50%;
+                  left: 50%;
+                  margin-top: -200px;
+                  margin-left: -200px;
+              }
+              .divForm1{
+                  background-color: white;
+                  border-radius: 8px;
+
+              }
+              #title
+              {
+                  color: white;
+              }
+              #password, #confirm, #email,#username{
+                  width: 90%;
+                  background-color: floralwhite;
+                  border: lightgrey 0.5px solid;
+                  border-radius: 5px;
+                  height: 45px;
+                  margin-top: 15px;
+              }
+              .submit{
+                  margin-left: 20px;
+                  width: 360px;
+                  background-color: blueviolet;   /*背景颜色*/
+                  border: dodgerblue 0.5px solid;
+                  border-radius: 5px;
+                  height: 45px;
+                  color: white;   /*字体颜色*/
+                  margin-top: 15px;
+                  margin-bottom: 20px;
+              }
+    </style>
+
+</head>
+<body class="about-page">
+<div class="page-header">
+    <header class="site-header">
+        <div class="nav-bar" id="floatbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                        <nav class="site-navigation flex justify-content-end align-items-center">
+                            <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li><a href="/index">首页</a></li>
+                                <li><a href="/conference/search">查询会议</a></li>
+                                <li><a href="/conference/add">添加会议</a></li>
+                                <li><a href="/aboutUs">关于我们</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+</div><!-- .page-header -->
+
+
+<div class="divForm">
+    <p class="h2" id="title">
+        学术日历与地图系统
+    </p>
+<!--    坑点2：springmvc是使用name自动匹配-->
+    <form method="post" th:action="@{/register}"  class="divForm1">
+        <p class="card-title">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <span class="entry-title">注册</span>
+        </p>
+        <div class="col-sm-12">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <input type="text" placeholder="  用户名" id="username" name="username"
+                   th:class="|form-control fa fa-user-circle ${usernameMsg!=null?'is-invalid':''}|" th:value="${user!=null?user.username:''}" required>
+            <div class="invalid-feedback" align="left" th:text="'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+${usernameMsg}">反馈信息</div>
+        </div>
+        <div class="col-sm-12">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <input type="password" placeholder="  密码" id="password" name="password"
+                   th:class="|form-control fa fa-user-circle ${passwordMsg!=null?'is-invalid':''}|" th:value="${user!=null?user.password:''}" required>
+            <div class="invalid-feedback" align="left" th:text="'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+${passwordMsg}">反馈信息</div>
+        </div>
+        <div class="col-sm-12">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            <input type="password" placeholder="  确认密码" id="confirm" name="confirm" class="fa fa-check-square-o form-control"
+                   th:value="''" required>
+            <div class="invalid-feedback" align="left">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp两次输入密码不一致</div>
+        </div>
+
+        <div class="col-sm-12">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <input type="email" placeholder="  邮箱" id="email" name="email"
+                   th:class="|form-control fa fa-envelope-o ${emailMsg!=null?'is-invalid':''}|" th:value="${user!=null?user.email:''}" required>
+            <div class="invalid-feedback" align="left" th:text="'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+${emailMsg}">反馈信息</div>
+        </div>
+        <input type="submit" value="注册" class="submit" align="center" >
+        <br>
+
+    </form>
+</div>
+<!--坑点1. 原来导的是下来的jquery，于是写的js就不能正确响应了。。。-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/register.js}"></script>
+<!--    下拉菜单依赖的js-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

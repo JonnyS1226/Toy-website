@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="hero-content">
+        <header class="site-header" >
+            <div class="top-header-bar" th:fragment="TopHeader"><!--最顶上搜索框和登录注册/用户框-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                            <div class="header-bar-text lg-flex align-items-center">
+                                <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                    　　<i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-envelope-o"></i>
+                                </a>
+                            </div><!-- .header-bar-text -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                            <div class="header-bar-search" >
+                                <form class="flex align-items-stretch" th:action="@{/es/search}" method="get">
+                                    <label for="keyword"></label><input type="search" id="keyword" name="keyword" placeholder="搜索会议，分类，地点..." th:value="${keyword}">
+                                    <button type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- .header-bar-search -->
+
+                            <div class="header-bar-menu">
+                                <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                    <li><a th:href="@{/register}" th:if="${alreadyLoginUser==null}">注册</a></li>
+                                    <li><a th:href="@{/login}" th:if="${alreadyLoginUser==null}">登录</a></li>
+                                    <li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${alreadyLoginUser!=null}">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="badge badge-danger" th:if="${unreadRows!=0}" th:text="${unreadRows}">1</span>
+                                            <span>用户:</span><span th:utext="${alreadyLoginUser.username}">xxx</span>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" th:href="@{/user/profile}">个人中心</a>
+                                            <a class="dropdown-item" th:href="@{/notice/show}">消息通知
+                                                <span class="badge badge-danger" th:if="${unreadRows!=0}" th:text="${unreadRows}">1</span>
+                                            </a>
+                                            <a class="dropdown-item" th:href="@{/data}" th:if="${alreadyLoginUser.role==1}">网站统计</a>
+                                            <a class="dropdown-item" th:href="@{/logout}">退出登录</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!-- .header-bar-menu -->
+                        </div><!-- .col -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-bar" id="floatbar" th:fragment="NavBar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="/index" rel="home">学术<span>日历与地图</span></a></h1>
+                            </div><!-- .site-branding -->
+                        </div><!-- .col -->
+
+                        <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                            <nav class="site-navigation flex justify-content-end align-items-center">
+                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li><a href="/index">首页</a></li>
+                                    <li><a href="/conference/search">查询会议</a></li>
+                                    <li><a href="/conference/add">添加会议</a></li>
+                                    <li><a href="/aboutUs">关于我们</a></li>
+
+                                </ul>
+
+
+
+                            </nav><!-- .site-navigation -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+
+        <div class="hero-content-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
+                            <header class="entry-header">
+                                <h4>制定你的学术"管家"</h4>
+                                <h1>学术日历<br/>与地图</h1>
+                            </header><!-- .entry-header -->
+
+                            <div class="entry-content">
+                                <p>提供计算机领域主要学术会议的召开时间和地点等信息检索服务，用户也可自由录入其他会议，加入Google日历，及时提醒<br>本服务需要有Google日历和Google地图的使用权限</p>
+                            </div><!-- .entry-content -->
+
+                            <footer class="entry-footer read-more">
+                                <a href="#aboutus">了解更多</a>
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .hero-content-wrap -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .hero-content-hero-content-overlay -->
+    </div><!-- .hero-content -->
+
+    <div class="icon-boxes">
+        <div class="container-fluid">
+            <div class="flex flex-wrap align-items-stretch">
+                <div class="icon-box">
+                    <div class="icon">
+                        <span class="ti-user"></span>
+                    </div><!-- .icon -->
+
+                    <header class="entry-header">
+                        <h2 class="entry-title">个人中心</h2>
+                    </header><!-- .entry-header -->
+
+                    <div class="entry-content">
+                        <p>查看个人中心<br>个人学术会议收藏<br>个人注册信息</p>
+                    </div><!-- .entry-content -->
+
+                    <footer class="entry-footer read-more">
+                        <a href="/user/profile">read more<i class="fa fa-long-arrow-right"></i></a>
+                    </footer><!-- .entry-footer -->
+                </div><!-- .icon-box -->
+
+                <div class="icon-box">
+                    <div class="icon">
+                        <span class="fa fa-search-minus"></span>
+                    </div><!-- .icon -->
+
+                    <header class="entry-header">
+                        <h2 class="entry-title">检索会议</h2>
+                    </header><!-- .entry-header -->
+
+                    <div class="entry-content">
+                        <p>检索会议相关信息<br>时间地点<br>会议网址...</p>
+                    </div><!-- .entry-content -->
+
+                    <footer class="entry-footer read-more">
+                        <a href="/conference/search">read more<i class="fa fa-long-arrow-right"></i></a>
+                    </footer><!-- .entry-footer -->
+                </div><!-- .icon-box -->
+
+                <div class="icon-box">
+                    <div class="icon">
+                        <span class="fa fa-plus-square"></span>
+                    </div><!-- .icon -->
+
+                    <header class="entry-header">
+                        <h2 class="entry-title">手动录入</h2>
+                    </header><!-- .entry-header -->
+
+                    <div class="entry-content">
+                        <p>手动录入会议信息<br>时间<br>地点</p>
+                    </div><!-- .entry-content -->
+
+                    <footer class="entry-footer read-more">
+                        <a href="/conference/add">read more<i class="fa fa-long-arrow-right"></i></a>
+                    </footer><!-- .entry-footer -->
+                </div><!-- .icon-box -->
+
+                <div class="icon-box">
+                    <div class="icon">
+                        <span class="ti-world"></span>
+                    </div><!-- .icon -->
+
+                    <header class="entry-header">
+                        <h2 class="entry-title">关于我们</h2>
+                    </header><!-- .entry-header -->
+
+                    <div class="entry-content">
+                        <p>软件研发初衷<br>功能实现<br>项目相关</p>
+                    </div><!-- .entry-content -->
+
+                    <footer class="entry-footer read-more">
+                        <a href="#aboutus">read more<i class="fa fa-long-arrow-right"></i></a>
+                    </footer><!-- .entry-footer -->
+                </div><!-- .icon-box -->
+            </div><!-- .row -->
+        </div><!-- .container-fluid -->
+    </div><!-- .icon-boxes -->
+
+    <section class="featured-courses vertical-column courses-wrap">
+        <div class="container">
+            <div class="row mx-m-25">
+                <div class="col-12 px-25">
+                    <header class="heading flex flex-wrap justify-content-between align-items-center">
+                        <h2 class="entry-title">常用会议</h2>
+
+                        <nav class="courses-menu mt-3 mt-lg-0">
+                            <ul class="flex flex-wrap justify-content-md-end align-items-center">
+                                <li class="active"><a th:href="@{/conference/search}">全部</a></li>
+                                <li><a th:href="@{/conference/search}">高性能计算</a></li>
+                                <li><a th:href="@{/conference/search}">计算机网络</a></li>
+                                <li><a th:href="@{/conference/search}">人工智能与模式识别</a></li>
+                                <li><a th:href="@{/conference/search}">理论计算机科学</a></li>
+                            </ul>
+                        </nav><!-- .courses-menu -->
+                    </header><!-- .heading -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/888">CVPR 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/888">Seattle, WA</a></div>
+
+                                    <div class="course-date">Jun 16 - Jun 20, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span >Nov 15, 2019</span>
+                                </div><!-- .price-drop -->
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/3117">AAAI 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/3117">New York, USA</a></div>
+
+                                    <div class="course-date">Feb 7 - Feb 12, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span >Sep 5, 2019</span>
+                                </div><!-- .price-drop -->
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/1051">ACM WiSec 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/1051">Linz, Austria</a></div>
+
+                                    <div class="course-date">Jul 8 - Jul 10, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span >Mar 13, 2020</span>
+                                </div><!-- .course-cost -->
+
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/2783">ICML 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/2783">Vienna,Austria</a></div>
+
+                                    <div class="course-date">Jul 12 - Jul 18, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span>Feb 6, 2020</span>
+                                </div><!-- .course-cost -->
+
+
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/2545">ECCV 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/2545">Glasgow</a></div>
+
+                                    <div class="course-date">Aug 23 - Aug 28, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span >TBD</span>
+                                </div><!-- .course-cost -->
+
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-4 px-25">
+                    <div class="course-content">
+
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <h2 class="entry-title"><a href="/conference/detail/3121">ICRA 2020</a></h2>
+
+                                <div class="entry-meta flex align-items-center">
+                                    <div class="course-author"><a href="/conference/detail/3121">Paris</a></div>
+
+                                    <div class="course-date">May 31 - Jun 4, 2020</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    截稿：<span>TBD</span>
+                                </div><!-- .course-cost -->
+
+
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 px-25 flex justify-content-center">
+                    <a class="btn" href="/conference/search">检索会议信息</a>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section><!-- .courses-wrap -->
+
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 align-content-lg-stretch">
+                    <header class="heading">
+                        <h2 class="entry-title" id="aboutus">关于我们</h2>
+
+                        <p>通过自动或手动汇集，收集主要计算机领域学术会议相关信息，帮助用户编制专属的学术日历与地图！</p>
+                        <p>会议更新信息、新增信息，随时通知用户，用户也可致信管理员提交信息，</p>
+                        <p>添加收藏，随时查看，不用再担心会议时效性短，变动频繁！</p>
+                        <p>支持添加到Google日历，Microsoft日历，支持Google地图，百度地图展示地点，带给用户优秀的体验</p>
+                    </header><!-- .heading -->
+
+                    <div class="entry-content ezuca-stats">
+                        <div class="stats-wrap flex flex-wrap justify-content-lg-between">
+                            <div class="stats-count">
+                                10<span>+</span>
+                                <p>会议 分类</p>
+                            </div><!-- .stats-count -->
+
+                            <div class="stats-count">
+                                3<span>K+</span>
+                                <p>会议 信息</p>
+                            </div><!-- .stats-count -->
+                        </div><!-- .stats-wrap -->
+                    </div><!-- .ezuca-stats -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6 flex align-content-center mt-5 mt-lg-0">
+                    <div class="ezuca-video position-relative">
+                        <div class="video-play-btn position-absolute">
+                            <img src="images/video-icon.png" alt="Video Play">
+                        </div><!-- .video-play-btn -->
+
+                        <img src="images/video-screenshot.png" alt="">
+                    </div><!-- .ezuca-video -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section><!-- .about-section -->
+
+
+
+
+    <section class="latest-news-events">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="heading flex justify-content-between align-items-center">
+                        <h2 class="entry-title">设计初衷</h2>
+                    </header><!-- .heading -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+                    <div class="featured-event-content">
+                        <figure class="event-thumbnail position-relative m-0">
+                            <a href="#"><img src="images/CVPR.jpg" alt=""></a>
+
+                            <div class="posted-date position-absolute">
+                                <div class="day">18</div>
+                                <div class="month">Jun</div>
+                            </div><!-- .posted-date -->
+                        </figure><!-- .event-thumbnail -->
+
+                        <header class="entry-header flex flex-wrap align-items-center">
+                            <h2 class="entry-title"><a href="#">Computer Vision and Pattern Recognition</a></h2>
+
+                            <div class="event-location"><i class="fa fa-map-marker"></i>Los Angeles CA, United States</div>
+
+                            <div class="event-duration"><i class="fa fa-calendar"></i>Jun 15 - Jun 21, 2019</div>
+                        </header><!-- .entry-header -->
+                    </div><!-- .featured-event-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6 mt-5 mt-lg-0">
+                    <div class="event-content flex flex-wrap justify-content-between align-content-stretch">
+
+
+                        <div class="event-content-wrap">
+                            <h2 class="event-location">学术日历与地图</h2>
+                            <h3 class="entry-title">科研助手</h3>
+                            <br>
+                            <div class="entry-content">
+                                <p>计算机领域的研究成果更多在学术会议上发表，而不是传统的学术期刊。</p>
+                                <p>而由于学术会议的周期短，受众多，影响力扩散快，给科研人员带来困扰。</p>
+                                <br>
+                                <p>学术会议多，每个会议的主题侧重不同、重要性不同、时间地点都不同</p>
+                                <p>为此编制本学术日历与地图</p>
+                                <br>
+                                <p>通过手动和自动汇集会议相关信息的方式，提供多种检索方式，供用户检索。</p>
+                                <p>检索会议有详细的会议信息，以及使用百度地图展示会议地点。</p>
+                                <br>
+                                <p>用户可以添加至个人收藏，随时查看！<br>同时可以添加至本地以及谷歌地图，不用担心变动频繁！<br>可以新添会议，同时会议更改信息第一时间通知用户！</p>
+                            </div><!-- .entry-content -->
+                        </div><!-- .event-content-wrap -->
+                    </div><!-- .event-content -->
+
+
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section><!-- .latest-news-events -->
+
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                            <h5>学术日历与地图 </h5>
+
+                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </div><!-- .foot-about -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>联系方式</h2>
+
+                            <ul>
+                                <li>Email: sjy1933794630@gmail.com</li>
+                                <li>Address: 哈尔滨工业大学(威海)</li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="quick-links flex flex-wrap">
+                            <h2 class="w-100">快速链接</h2>
+
+                            <ul class="w-50">
+                                <li><a href="#">回到顶部 </a></li>
+                                <li><a href="#aboutus">关于我们 </a></li>
+                                <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                                <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                            </ul>
+
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="follow-us">
+                            <h2>项目地址</h2>
+
+                            <ul class="follow-us flex flex-wrap align-items-center">
+                                <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                            </ul>
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+    </footer><!-- .site-footer -->
+
+<script type='text/javascript' src='/js/jquery.js'></script>
+<script type='text/javascript' src='/js/swiper.min.js'></script>
+<script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+<script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/js/custom.js'></script>
+<!--    下拉菜单依赖的js-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

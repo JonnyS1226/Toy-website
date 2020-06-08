@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账户设置</title>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!-- FontAwesome CSS -->
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+<!-- ElegantFonts CSS -->
+<link rel="stylesheet" href="/css/elegant-fonts.css">
+
+<!-- themify-icons CSS -->
+<link rel="stylesheet" href="/css/themify-icons.css">
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="/css/swiper.min.css">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/css/style.css">
+<body>
+<div class="blog-page">
+    <div class="page-header">
+        <header class="site-header">
+            <div class="top-header-bar" th:replace="index::TopHeader">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                            <div class="header-bar-text lg-flex align-items-center">
+                                <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                    　　<i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-envelope-o"></i>
+                                </a>
+                            </div><!-- .header-bar-text -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                            <div class="header-bar-search" >
+                                <form class="flex align-items-stretch">
+                                    <input type="search" placeholder="搜索">
+                                    <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- .header-bar-search -->
+
+                            <div class="header-bar-menu">
+                                <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                    <li><a href="#">注册</a></li>
+                                    <li><a href="#">登录</a></li>
+                                </ul>
+                            </div><!-- .header-bar-menu -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container-fluid -->
+            </div><!-- .top-header-bar -->
+
+            <div class="nav-bar" id="floatbar" th:replace="index::NavBar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="index.html" rel="home">学术<span>日历与地图</span></a></h1>
+                            </div><!-- .site-branding -->
+                        </div><!-- .col -->
+
+                        <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                            <nav class="site-navigation flex justify-content-end align-items-center">
+                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="index.html">首页</a></li>
+                                    <li><a href="conference.html">查询会议</a></li>
+                                    <li><a href="add.html">添加会议</a></li>
+                                    <li><a href="#aboutus">关于我们</a></li>
+                                    <li><a href="personal.html">个人中心</a></li>
+                                </ul>
+
+
+
+                            </nav><!-- .site-navigation -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-heading">
+                            <h1>账户设置</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="container p-5 mt-3 mb-3">
+
+        <div class="position-relative">
+            <!-- 选项 -->
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link position-relative" th:href="@{/user/profile}">收藏会议</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link position-relative active" th:href="@{/user/setting}">账户设置</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 修改密码 -->
+        <h6 class="text-left text-info border-bottom pb-2 mt-5">修改密码</h6>
+        <form class="mt-5" th:action="@{/user/setting}" method="post">
+            <div class="form-group row mt-4">
+<!--                坑点：  这里的label for属性不能缺失-->
+                <label for="oldPwd" class="col-sm-2 col-form-label text-right">原密码:</label>
+                <div class="col-sm-10">
+                    <input type="password" th:class="|form-control ${passwordMsg!=null?'is-invalid':''}|" id="oldPwd" name="oldPwd" placeholder="请输入原始密码!" required>
+                    <div class="invalid-feedback" th:text="${passwordMsg}">
+                        密码长度不能小于8位!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mt-4">
+                <label for="newPwd" class="col-sm-2 col-form-label text-right">新密码:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="newPwd" name="newPwd" placeholder="请输入新的密码!" required>
+                    <div class="invalid-feedback">
+                        密码长度不能小于8位!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mt-4">
+                <label for="confirm-password" class="col-sm-2 col-form-label text-right">确认密码:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="confirm-password" placeholder="再次输入新密码!" required>
+                    <div class="invalid-feedback">
+                        两次输入的密码不一致!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mt-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 text-center">
+                    <button type="submit" class="btn btn-info text-white form-control">立即保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+<footer class="site-footer">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="foot-about">
+                        <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                        <h5>学术日历与地图 </h5>
+
+                        <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .foot-about -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                    <div class="foot-contact">
+                        <h2>联系方式</h2>
+
+                        <ul>
+                            <li>Email: sjy1933794630@gmail.com</li>
+                            <li>Address: 哈尔滨工业大学(威海)</li>
+                        </ul>
+                    </div><!-- .foot-contact -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="quick-links flex flex-wrap">
+                        <h2 class="w-100">快速链接</h2>
+
+                        <ul class="w-50">
+                            <li><a href="#">回到顶部 </a></li>
+                            <li><a href="http://localhost:63342/academic_calendar/templates/index.html#aboutus">关于我们 </a></li>
+                            <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                            <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                        </ul>
+
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="follow-us">
+                        <h2>项目地址</h2>
+
+                        <ul class="follow-us flex flex-wrap align-items-center">
+                            <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .footer-widgets -->
+
+</footer><!-- .site-footer -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script type='text/javascript' src='/js/swiper.min.js'></script>
+<script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+<script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/js/custom.js'></script>
+<script type="text/javascript" src="/js/setting.js"></script>
+
+
+
+<!--    下拉菜单依赖的js-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

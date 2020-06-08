@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>网站数据</title>
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/css/elegant-fonts.css">
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/css/swiper.min.css">
+    <link rel="stylesheet" href="/css/toastr.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+    <style>
+        .top-1{
+            position: absolute;
+            width: 100px;
+            height: 1200px;
+        }
+        .top-2{
+            position: absolute;
+            width: 1px;
+        }
+        .top-3{
+            position: absolute;
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body class="blog-page">
+<div class="page-header">
+    <header class="site-header">
+        <div class="top-header-bar" th:replace="index::TopHeader">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                        <div class="header-bar-text lg-flex align-items-center">
+                            <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                　　<i class="fa fa-github"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-envelope-o"></i>
+                            </a>
+                        </div><!-- .header-bar-text -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                        <div class="header-bar-search" >
+                            <form class="flex align-items-stretch">
+                                <input type="search" placeholder="搜索">
+                                <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div><!-- .header-bar-search -->
+
+                        <div class="header-bar-menu">
+                            <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                <li><a href="#">注册</a></li>
+                                <li><a href="#">登录</a></li>
+                            </ul>
+                        </div><!-- .header-bar-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .top-header-bar -->
+
+        <div class="nav-bar" id="floatbar" th:replace="index::NavBar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-9 col-lg-3">
+                        <div class="site-branding">
+                            <h1 class="site-title"><a href="index.html" rel="home">学术<span>日历与地图</span></a></h1>
+                        </div><!-- .site-branding -->
+                    </div><!-- .col -->
+
+                    <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                        <nav class="site-navigation flex justify-content-end align-items-center">
+                            <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="index.html">首页</a></li>
+                                <li><a href="conference.html">查询会议</a></li>
+                                <li><a href="add.html">添加会议</a></li>
+                                <li><a href="#aboutus">关于我们</a></li>
+                                <li><a href="personal.html">个人中心</a></li>
+                            </ul>
+
+
+
+                        </nav><!-- .site-navigation -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1>个人中心</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+</div><!-- .page-header -->
+<div class="main">
+    <!-- 网站UV -->
+    <div class="container pl-5 pr-5 pt-3 pb-3 mt-3">
+        <h6 class="mt-3"><b class="square"></b> 网站 UV</h6>
+        <form class="form-inline mt-3" method="post" th:action="@{/data/uv}">
+            <input type="date" class="form-control" required name="start" th:value="${#dates.format(uvStartDate,'yyyy-MM-dd')}"/>
+            <input type="date" class="form-control ml-3" required name="end" th:value="${#dates.format(uvEndDate,'yyyy-MM-dd')}"/>
+            <button type="submit" class="btn btn-primary ml-3">开始统计</button>
+        </form>
+        <ul class="list-group mt-3 mb-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                统计结果
+                <span class="badge badge-primary badge-danger font-size-14" th:text="${uvResult}">0</span>
+            </li>
+        </ul>
+    </div>
+    <div id="main1" style="width: 800px;height:500px;text-align: center;margin: 0 auto"></div>
+
+    <script type="text/javascript" th:inline="javascript">
+        var xs = [[${dates}]];
+        var uvs = [[${uvDatas}]];
+        var  option = {
+            title: {
+                text:"最近七天独立访客数"
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['网站独立访客','折线']
+            },
+            xAxis: [
+                {
+                    name:'日期',
+                    type: 'category',
+                    data: xs
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '网站独立访客/人次',
+                    min: 0,
+                    max: 5,
+                    interval: 1,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series: [
+                {
+                    name:'网站独立访客',
+                    type:'bar',
+                    /*设置柱状图颜色*/
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#fe4f4f','#fead33','#feca2b','#fef728','#c5ee4a',
+                                    '#87ee4a','#46eda9','#47e4ed','#4bbbee','#7646d8',
+                                    '#924ae2','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                            /*信息显示方式*/
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: '{b}\n{c}'
+                            }
+                        }
+                    },
+                    data:uvs
+                },
+                {
+                    name:'折线',
+                    type:'line',
+                    itemStyle : {  /*设置折线颜色*/
+                        normal : {
+                            /* color:'#c4cddc'*/
+                        }
+                    },
+                    data:uvs
+                }
+            ]
+        };
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main1'));
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+
+    <!-- 活跃用户 -->
+    <div class="container pl-5 pr-5 pt-3 pb-3 mt-4">
+        <h6 class="mt-3"><b class="square"></b> 活跃用户</h6>
+        <form class="form-inline mt-3" method="post" th:action="@{/data/dau}">
+            <input type="date" class="form-control" required name="start" th:value="${#dates.format(dauStartDate,'yyyy-MM-dd')}"/>
+            <input type="date" class="form-control ml-3" required name="end" th:value="${#dates.format(dauEndDate,'yyyy-MM-dd')}"/>
+            <button type="submit" class="btn btn-primary ml-3">开始统计</button>
+        </form>
+        <ul class="list-group mt-3 mb-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                统计结果
+                <span class="badge badge-primary badge-danger font-size-14" th:text="${dauResult}">0</span>
+            </li>
+        </ul>
+    </div>
+    <div id="main2" style="width: 800px;height:500px;text-align: center;margin: 0 auto"></div>
+
+    <script type="text/javascript" th:inline="javascript">
+        var xs = [[${dates}]];
+        var daus = [[${dauDatas}]];
+        var  option = {
+            title: {
+                text:"最近七天日活跃用户数"
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['日活跃用户','折线']
+            },
+            xAxis: [
+                {
+                    name:'日期',
+                    type: 'category',
+                    data: xs
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '日活跃用户/人次',
+                    min: 0,
+                    max: 10,
+                    interval: 2,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series: [
+                {
+                    name:'日活跃用户',
+                    type:'bar',
+                    /*设置柱状图颜色*/
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#fe4f4f','#fead33','#feca2b','#fef728','#c5ee4a',
+                                    '#87ee4a','#46eda9','#47e4ed','#4bbbee','#7646d8',
+                                    '#924ae2','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                            /*信息显示方式*/
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: '{b}\n{c}'
+                            }
+                        }
+                    },
+                    data:daus
+                },
+                {
+                    name:'折线',
+                    type:'line',
+                    itemStyle : {  /*设置折线颜色*/
+                        normal : {
+                            /* color:'#c4cddc'*/
+                        }
+                    },
+                    data:daus
+                }
+            ]
+        };
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main2'));
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</div>
+
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+<footer class="site-footer">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="foot-about">
+                        <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                        <h5>学术日历与地图 </h5>
+
+                        <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .foot-about -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                    <div class="foot-contact">
+                        <h2>联系方式</h2>
+
+                        <ul>
+                            <li>Email: sjy1933794630@gmail.com</li>
+                            <li>Address: 哈尔滨工业大学(威海)</li>
+                        </ul>
+                    </div><!-- .foot-contact -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="quick-links flex flex-wrap">
+                        <h2 class="w-100">快速链接</h2>
+
+                        <ul class="w-50">
+                            <li><a href="#">回到顶部 </a></li>
+                            <li><a href="http://localhost:63342/academic_calendar/templates/index.html#aboutus">关于我们 </a></li>
+                            <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                            <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                        </ul>
+
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="follow-us">
+                        <h2>项目地址</h2>
+
+                        <ul class="follow-us flex flex-wrap align-items-center">
+                            <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .footer-widgets -->
+
+</footer><!-- .site-footer -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script type='text/javascript' src='/js/jquery.js'></script>
+<script type='text/javascript' src='/js/swiper.min.js'></script>
+<script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+<script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/js/custom.js'></script>
+<!--    下拉菜单依赖的js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

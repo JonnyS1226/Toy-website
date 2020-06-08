@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>添加会议</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- datetime依赖样式-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+<!--    <link rel="stylesheet" href="/css/style.css">-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.22.0/moment-with-locales.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+<body class="contact-page">
+    <div class="page-header">
+        <header class="site-header">
+            <div class="top-header-bar" th:replace="index::TopHeader">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                            <div class="header-bar-text lg-flex align-items-center">
+                                <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                    　　<i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-envelope-o"></i>
+                                </a>
+                            </div><!-- .header-bar-text -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                            <div class="header-bar-search" >
+                                <form class="flex align-items-stretch">
+                                    <input type="search" placeholder="搜索">
+                                    <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- .header-bar-search -->
+
+                            <div class="header-bar-menu">
+                                <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                    <li><a href="#">注册</a></li>
+                                    <li><a href="#">登录</a></li>
+                                </ul>
+                            </div><!-- .header-bar-menu -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container-fluid -->
+            </div><!-- .top-header-bar -->
+
+            <div class="nav-bar" id="floatbar" th:replace="index::NavBar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="index.html" rel="home">学术<span>日历与地图</span></a></h1>
+                            </div><!-- .site-branding -->
+                        </div><!-- .col -->
+
+                        <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                            <nav class="site-navigation flex justify-content-end align-items-center">
+                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="index.html">首页</a></li>
+                                    <li><a href="conference.html">查询会议</a></li>
+                                    <li><a href="add.html">添加会议</a></li>
+                                    <li><a href="#aboutus">关于我们</a></li>
+                                    <li><a href="personal.html">个人中心</a></li>
+                                </ul>
+
+
+
+                            </nav><!-- .site-navigation -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-header">
+                            <h1>手动录入</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs">
+                    <ul class="flex flex-wrap align-items-center p-0 m-0">
+                        <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+                        <li>添加会议</li>
+                    </ul>
+                </div><!-- .breadcrumbs -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+        <div class="row justify-content-between">
+
+
+            <div class="col-12 col-lg-6">
+                <div class="contact-form" >
+                    <h3>录入会议信息</h3>
+                    <br>
+                    <form th:action="@{/conference/add}" method="post">
+                        <h4 th:if="${msg!='录入会议成功'}" th:text="${msg}" style="color: red; font-weight: bold" >x</h4>
+                        <h4 th:if="${msg=='录入会议成功'}" style="color: red; font-weight: bold">录入会议成功~</h4>
+                        <br>
+                        <span class="entry-title">会议全称</span>
+                        <br>
+                        <input type="text" placeholder="会议名称" name="conference" class="form-control" required>
+                        <br>
+                        <span class="entry-content">主题</span>
+                        <input type="text" placeholder="主题" name="categories" class="form-control" required>
+                        <br>
+                        <span class="entry-content">起止时间</span>
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <!--指定 date标记-->
+
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" placeholder="开始时间" name="startTime"/>
+                                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <!--指定 date标记-->
+
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' class="form-control" placeholder="结束时间" name="endTime"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <span class="entry-content">投稿截止时间</span>
+                        <div class="form-group">
+                            <!--指定 date标记-->
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" placeholder="投稿截止时间" name="submissionDeadline"/>
+                                <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                            </div>
+                        </div>
+                        <br>
+                        <span class="entry-content">召开地点</span>
+                        <input type="text" class="form-control" placeholder="召开地点" name="location" required>
+                        <br>
+                        <span class="entry-content">会议官网</span>
+                        <input type="text" class="form-control" placeholder="URL" name="link" required>
+
+                        <input type="submit" value="提 交 录 入">
+                    </form>
+                </div><!-- .contact-form -->
+            </div><!-- .col -->
+
+            <div class="col-12 col-lg-6">
+                <div class="contact-info">
+                    <h3>录入帮助</h3>
+
+                    <p>以下是录入会议信息的一些要求和规范，若不按照规范，有可能录入失败 </p>
+
+                    <ul class="p-0 m-0">
+                        <li><span>必填项：</span>会议名称，主题，召开地点，会议官网</li>
+                        <li><span>选填项：</span>起止时间，投稿截止时间</li>
+                        <li><span>其它：</span>若投稿截止时间为TBD（待定），则直接输入TBD或者空值即可；若该会议主题是多个相关，可以使用'|'进行间隔。</li>
+                    </ul>
+                </div><!-- .contact-info -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                            <h5>学术日历与地图 </h5>
+
+                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </div><!-- .foot-about -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>联系方式</h2>
+
+                            <ul>
+                                <li>Email: sjy1933794630@gmail.com</li>
+                                <li>Address: 哈尔滨工业大学(威海)</li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="quick-links flex flex-wrap">
+                            <h2 class="w-100">快速链接</h2>
+
+                            <ul class="w-50">
+                                <li><a href="#">回到顶部 </a></li>
+                                <li><a href="#aboutus">关于我们 </a></li>
+                                <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                                <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                            </ul>
+
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                        <div class="follow-us">
+                            <h2>项目地址</h2>
+
+                            <ul class="follow-us flex flex-wrap align-items-center">
+                                <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                            </ul>
+                        </div><!-- .quick-links -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+    </footer><!-- .site-footer -->
+
+    <script type='text/javascript' src='/js/jquery.js'></script>
+    <script type='text/javascript' src='/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/js/custom.js'></script>
+
+    <script>
+    $(function () {
+        var picker1 = $('#datetimepicker1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn'),
+        });
+        var picker2 = $('#datetimepicker2').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn')
+        });
+        //动态设置最小值
+        picker1.on('dp.change', function (e) {
+            picker2.data('DateTimePicker').minDate(e.date);
+        });
+        //动态设置最大值
+        picker2.on('dp.change', function (e) {
+            picker1.data('DateTimePicker').maxDate(e.date);
+        });
+        var picker3 = $('#datetimepicker3').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn')
+        });
+    });
+
+    </script>
+<script>
+    $(".glyphicon-remove").click(function(){
+        $($($(this).parent()).prev()).val("");
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>消息通知</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/css/swiper.min.css">
+    <link rel="stylesheet" href="/css/toastr.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="blog-page">
+<div class="page-header">
+    <header class="site-header">
+        <div class="top-header-bar" th:replace="index::TopHeader">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+
+
+                        <div class="header-bar-text lg-flex align-items-center">
+                            <a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map">
+                                　　<i class="fa fa-github"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-envelope-o"></i>
+                            </a>
+                        </div><!-- .header-bar-text -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                        <div class="header-bar-search" >
+                            <form class="flex align-items-stretch">
+                                <input type="search" placeholder="搜索">
+                                <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div><!-- .header-bar-search -->
+
+                        <div class="header-bar-menu">
+                            <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                <li><a href="#">注册</a></li>
+                                <li><a href="#">登录</a></li>
+                            </ul>
+                        </div><!-- .header-bar-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .top-header-bar -->
+        <div class="nav-bar" id="floatbar" th:replace="index::NavBar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-9 col-lg-3">
+                        <div class="site-branding">
+                            <h1 class="site-title"><a href="index.html" rel="home">学术<span>日历与地图</span></a></h1>
+                        </div><!-- .site-branding -->
+                    </div><!-- .col -->
+
+                    <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
+                        <nav class="site-navigation flex justify-content-end align-items-center">
+                            <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="index.html">首页</a></li>
+                                <li><a href="conference.html">查询会议</a></li>
+                                <li><a href="add.html">添加会议</a></li>
+                                <li><a href="#aboutus">关于我们</a></li>
+                                <li><a href="personal.html">个人中心</a></li>
+                            </ul>
+
+
+
+                        </nav><!-- .site-navigation -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1>消息通知</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+</div><!-- .page-header -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumbs">
+                <ul class="flex flex-wrap align-items-center p-0 m-0">
+                    <li><a href="#"><i class="fa fa-home"></i> 首页</a></li>
+                    <li>消息通知</li>
+                </ul>
+            </div><!-- .breadcrumbs -->
+        </div><!-- .col -->
+    </div><!-- .row -->
+    <span th:if="${page.rows == 0}">没 有 新 通 知</span>
+    <ul class="list-unstyled" th:each="map:${noticeList}">
+        <!--评论-->
+        <li class="media pb-3 pt-3 mb-3 border-bottom position-relative" >
+            <span class="badge badge-danger" th:if="${map.notice.status==0}">1</span>
+            <img src="/images/reply.png" class="mr-4 user-header" alt="通知图标">
+            <div class="media-body">
+                <h6 class="mt-0 mb-3">
+                    <span th:text="${map.notice.type=='update'?'会议更新通知':'新增会议通知'}">会议更新</span>
+                    <span class="float-right text-muted font-size-12"
+                    th:text="${#dates.format(map.notice.createTime,'yyyy-MM-dd HH:mm:ss')}">
+									2019-04-28 14:13:25</span>
+                </h6>
+                <div th:if="${map.notice.type=='update'}">
+                    你收藏的会议 <i th:text="${#strings.length(map.conf.conference)>35?#strings.substring(map.conf.conference, 0, 30) + '...':map.conf.conference}"
+                              class="text-primary">xxx...</i>  信息发生了更新，
+                    <a th:href="@{|/notice/read/${map.notice.id}/${map.conf.id}|}">点击查看</a>
+                    <ul class="d-inline font-size-12 float-right">
+                        <li class="d-inline ml-2">
+                            <span class="text-primary">
+                                <input type="hidden" id="noticeId" name="noticeId" th:value="${map.notice.id}">
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div th:if="${map.notice.type=='insert'}">
+                    有新录入的会议啦： <i th:text="${#strings.length(map.conf.conference)>35?#strings.substring(map.conf.conference, 0, 30) + '...':map.conf.conference}" class="text-primary">xxx...</i>，
+                    <a th:href="@{|/notice/read/${map.notice.id}/${map.conf.id}|}">点击查看</a>
+                    <ul class="d-inline font-size-12 float-right">
+                        <li class="d-inline ml-2">
+                            <span class="text-primary">
+                                <input type="hidden" id="noticeId" name="noticeId" th:value="${map.notice.id}">
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div><!-- .container -->
+<div class="pagination flex flex-wrap justify-content-between align-items-center" th:if="${page.rows>10}">
+    <div class="col-16 col-lg-10 order-2 order-lg-1 mt-3 mt-lg-0">
+        <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
+            <li>
+                <a th:href="@{${page.path}(current=1)}"> << </a>
+            </li>
+            <li th:class="|${page.current==1?'disabled':''}|">
+                <a th:href="@{${page.path}(current=${page.current-1})}"><i class="fa fa-angle-left"></i></a>
+            </li>
+            <li th:class="|page-item ${i==page.current?'active':''}|" th:each="i:${#numbers.sequence(page.from,page.to)}">
+                <a th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
+            </li>
+            <li th:class="|${page.current==page.total?'disabled':''}|">
+                <a th:href="@{${page.path}(current=${page.current==page.total?page.total:page.current+1})}"><i class="fa fa-angle-right"></i></a>
+            </li>
+            <li>
+                <a th:href="@{${page.path}(current=${page.total})}"> >> </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-12 flex justify-content-start justify-content-lg-end col-lg-12 order-1 order-lg-2">
+        <div class="pagination-results flex flex-wrap align-content-center">
+            <p class="m-0">Total <i th:text="${page.rows + '  '}"></i>  results in <i th:text="${page.total + '  '}"></i> pages</p>
+        </div><!-- .pagination-results -->
+    </div>
+</div><!-- .pagination -->
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color=#987cb9 SIZE=10>
+
+<footer class="site-footer">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="foot-about">
+                        <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                        <h5>学术日历与地图 </h5>
+
+                        <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .foot-about -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                    <div class="foot-contact">
+                        <h2>联系方式</h2>
+
+                        <ul>
+                            <li>Email: sjy1933794630@gmail.com</li>
+                            <li>Address: 哈尔滨工业大学(威海)</li>
+                        </ul>
+                    </div><!-- .foot-contact -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="quick-links flex flex-wrap">
+                        <h2 class="w-100">快速链接</h2>
+
+                        <ul class="w-50">
+                            <li><a href="#">回到顶部 </a></li>
+                            <li><a href="http://localhost:63342/academic_calendar/templates/index.html#aboutus">关于我们 </a></li>
+                            <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                            <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                        </ul>
+
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="follow-us">
+                        <h2>项目地址</h2>
+
+                        <ul class="follow-us flex flex-wrap align-items-center">
+                            <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .footer-widgets -->
+
+</footer><!-- .site-footer -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script type='text/javascript' src='/js/jquery.js'></script>
+<script type='text/javascript' src='/js/swiper.min.js'></script>
+<script type='text/javascript' src='/js/masonry.pkgd.min.js'></script>
+<script type='text/javascript' src='/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/js/custom.js'></script>
+<!--    下拉菜单依赖的js-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="/js/toastr.min.js"></script>
+<script type="text/javascript">
+    toastr.options = {
+        positionClass: "toast-center-center"
+    }
+</script>
+<script>
+    $(function(){
+        $(".close").click(clear);
+    });
+
+    function clear() {
+        var btn = this;
+        $.post(
+            "/notice/delete",
+            {"noticeId": $(btn).prev().val()},
+            function (data) {
+                data = $.parseJSON(data);
+                if (data.code === 0) {
+                    window.location.reload();
+                } else {
+                    alert(data.msg);
+                }
+            }
+        );
+    }
+</script>
+</body>
+</html>

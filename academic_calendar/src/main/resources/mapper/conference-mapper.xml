@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.academic.calendar.dao.ConferenceDao">
+
+    <sql id="insertFields">
+        conference, link,categories,start_time,end_time,location,submission_deadline
+    </sql>
+
+    <sql id="selectFields">
+        id, conference, link,categories,start_time,end_time,location,submission_deadline
+    </sql>
+
+    <insert id="insertConference" keyProperty="id" parameterType="Conference"
+        useGeneratedKeys="true">
+        insert into conference(<include refid="insertFields"></include>)
+        values(#{conference},#{link},#{categories},#{startTime},#{endTime},#{location},#{submissionDeadline})
+    </insert>
+
+    <select id="selectConferenceByName" resultType="Conference" parameterType="java.lang.String">
+        select <include refid="selectFields"></include>
+        from conference
+        where conference = #{conference}
+    </select>
+
+    <select id="selectConferenceByCate" resultType="Conference">
+        select <include refid="selectFields"></include>
+        from conference
+        where categories like #{category}
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectAllConference" resultType="Conference">
+        select <include refid="selectFields"></include>
+        from conference
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectAllConferenceByName" resultType="Conference">
+        select <include refid="selectFields"></include>
+        from conference
+        where conference like #{conference}
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectConferenceRows" parameterType="java.lang.String" resultType="int">
+        select count(id)
+        from conference
+        where 1 = 1
+        <if test="conference!=null">
+            and conference like #{conference}
+        </if>
+        <if test="category!=null">
+            and categories like #{category}
+        </if>
+    </select>
+
+    <select id="selectConferenceById" resultType="Conference">
+        select * from conference
+        where id=#{id}
+    </select>
+
+    <update id="updateConference" parameterType="Conference">
+        update conference set conference=#{conference},
+        link=#{link},categories=#{categories},start_time=#{startTime},end_time=#{endTime},
+        location=#{location},submission_deadline=#{submissionDeadline}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteConference">
+        delete from conference where id=#{id}
+    </delete>
+</mapper>

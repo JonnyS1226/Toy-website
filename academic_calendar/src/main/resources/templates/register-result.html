@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册成功</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" th:href="@{css/font-awesome.min.css}">
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" th:href="@{css/elegant-fonts.css}">
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" th:href="@{css/themify-icons.css}">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" th:href="@{css/swiper.min.css}">
+    <!-- Styles -->
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+
+
+<div class="main">
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <p class="lead" th:text="${msg}">您的账号已经注册成功!</p>
+            <hr class="my-4">
+            <p>
+                系统会在 <span id="seconds" class="text-danger">8</span> 秒后自动跳转,
+                您也可以点此 <a id="target" th:href="@{${target}}" class="text-primary">链接</a>, 手动跳转!
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<footer class="site-footer">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="foot-about">
+                        <a class="foot-logo" href="#"><img src="/images/hit.jpg" alt=""></a>
+
+                        <h5>学术日历与地图 </h5>
+
+                        <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .foot-about -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                    <div class="foot-contact">
+                        <h2>联系方式</h2>
+
+                        <ul>
+                            <li>Email: sjy1933794630@gmail.com</li>
+                            <li>Address: 哈尔滨工业大学(威海)</li>
+                        </ul>
+                    </div><!-- .foot-contact -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="quick-links flex flex-wrap">
+                        <h2 class="w-100">快速链接</h2>
+
+                        <ul class="w-50">
+                            <li><a href="#">回到顶部 </a></li>
+                            <li><a href="#aboutus">关于我们 </a></li>
+                            <li><a href="https://www.hitwh.edu.cn/">哈尔滨工业大学(威海) </a></li>
+                            <li><a href="https://www.aminer.cn/">Aminer</a></li>
+                        </ul>
+
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                    <div class="follow-us">
+                        <h2>项目地址</h2>
+
+                        <ul class="follow-us flex flex-wrap align-items-center">
+                            <li><a href="https://github.com/SoftwareEngineeringProJ/Academic-Calendar-Map"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div><!-- .quick-links -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .footer-widgets -->
+
+</footer><!-- .site-footer -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        setInterval(function(){
+            var seconds = $("#seconds").text();
+            $("#seconds").text(--seconds);
+            if(seconds == 0) {
+                location.href = $("#target").attr("href");
+            }
+        }, 1000);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学术日历地图系统-忘记密码</title>
+</head>
+<body>
+    <div>
+        <p>
+            <b th:text="${email}">xxx@xxx.com</b>，您好！
+        </p>
+        <p>
+            您正在找回[学术日历地图网站]账户的密码，本次操作的验证码是：<b th:text="${code}">xxx</b>，
+            本次验证码有效时间是：<b>60秒</b>，请及时进行操作！
+        </p>
+    </div>
+</body>
+</html>
