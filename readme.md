@@ -29,7 +29,7 @@
   - 运行 SpringBoot 程序，使用 localhost:8080 即可访问
 - 数据源获取
   - 仓库中的SQL脚本含有数据，若要自己爬取，运行crawl/crawl_core.py，环境是Python3.7，依赖库有bs4和lxml
-
+- 注意：由于本项目使用到了google calendar，需要去谷歌API console下载credential，这部分Google API Console有详细教程
 
 
 ## 待办：
